@@ -2,6 +2,7 @@ import {
   render,
   waitFor,
   waitForElementToBeRemoved,
+  screen,
 } from "@testing-library/react";
 import App from "./App";
 import userEvent from "@testing-library/user-event";
@@ -26,41 +27,42 @@ describe("App Component", () => {
   });
 
   it("should be able to and new item to the list", async () => {
-    const { getByText, debug, getAllByPlaceholderText } = render(<App />);
+    const { getByText, debug, getAllByPlaceholderText, queryByText } = render(
+      <App />
+    );
 
     const inputElement = getAllByPlaceholderText("Novo Item");
 
-    // const addButton = getByText("Adicionar");
+    const addButton = getByText("Adicionar");
 
-    debug();
+    // debug();
 
-    // userEvent.type(inputElement, "Novo");
-    // userEvent.click(addButton);
+    userEvent.type(screen.getByText("Check"));
+    userEvent.click(addButton);
 
-    debug();
+    // debug();
 
-    // expect(await getByText("Novo")).toBeInTheDocument();
-    // await waitFor(() => {
-    //   expect(getByText("Novo")).toBeInTheDocument();
-    // });
+    // expect(await queryByText("Novo")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(queryByText("Novo"));
+    });
   });
 
   it("should be able to remove  item from the list", async () => {
     const { queryByText, getAllByText, debug } = render(<App />);
 
     const removeButton = getAllByText("Remover");
-    debug();
+    // debug();
 
     userEvent.click(removeButton[0]);
 
-    debug();
+    // debug();
+    // await waitForElementToBeRemoved(() => {
+    //   return queryByText("high");
+    // });
 
-    await waitForElementToBeRemoved(() => {
-      return queryByText("high");
-    });
-    // expect(await getByText("high")).toBeInTheDocument();
-
-    // await waitFor(() => {
+    expect(await queryByText("high")).toBeInTheDocument();
+// await waitFor(() => {
     //   expect(getByText("high")).not.toBeInTheDocument();
     // });
   });

@@ -19,7 +19,9 @@ function App() {
     <>
       <h1 className="high-name">Hello World</h1>
       <h2 data-testid="dev">lander</h2>
+      <label htmlFor="data">Check</label>
       <input
+        id="data"
         placeholder="Novo Item"
         value={newItem}
         onChange={(e) => setNewItem(e.target.value)}
